@@ -1,0 +1,32 @@
+[project]
+name = "corax-arcana"
+version = "0.1.0"
+description = "MTG Analytics Platform — KyberCorax Portfolio"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx",
+    "ijson",
+    "pyarrow",
+    "pydantic",
+    "duckdb",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.0",
+    "ruff>=0.15.17",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

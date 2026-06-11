@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+.env
+
+# Data files — never commit raw data
+data/
+*.parquet
+*.duckdb
+*.db
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/.user.yml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Secrets
+*.env
+.env.*
+!.env.example
