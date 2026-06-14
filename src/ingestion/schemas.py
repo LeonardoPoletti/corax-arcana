@@ -5,7 +5,7 @@ Pydantic models for Scryfall bulk data.
 
 Bronze layer philosophy:
     - Capture every field the API sends us.
-    - Make almost everything Optional - cards don't all have the same fields.
+    - Make almost everything Optional — cards don't all have the same fields.
     - Use extra = "allow" so nre Scryfall fields are captured automatically.
     - Field selection is Silver layer's responsibility, not ours.
 """
@@ -20,7 +20,7 @@ class BronzeCard(BaseModel):
     """
     Represents one card object from the Scryfall oracle_cards bulk file.
 
-    Only 'id', 'oracle_id', and 'name' are required - every other field
+    Only 'id', 'oracle_id', and 'name' are required — every other field
     is Optional because not all cards have all fields (e.g. tokens have
     no mana cost, double-faced cards have no image_uris at the top level).
     """

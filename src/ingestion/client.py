@@ -17,10 +17,14 @@ logger = logging.getLogger(__name__)
 BULK_DATA_CATALOGUE = "https://api.scryfall.com/bulk-data"
 
 
-def get_bulk_download_url(bulk_type: str) -> str:
+def get_bulk_info(bulk_type: str) -> dict:
     """
-    Call the scryfall bulk data catralogue and return the download URL
-    for the requested type (e.g. 'oracle_cards', 'rulings').
+    Call the Scryfall bulk data catalogue and return a dict with:
+        - download_uri: the URL to download the file
+        - updated_at: when Scryfall last regenerated this file
+
+    We retun both so the caller can decide whether to download
+    or skip (if the file has not changed since last run).
 
     Raises ValuesError if the type is not found.
     """
@@ -34,8 +38,16 @@ def get_bulk_download_url(bulk_type: str) -> str:
     for entry in catalogue["data"]:
         if entry["type"] == bulk_type:
             size_mb = entry["size"] / 1_000_000
-            logger.info("Found '%s': %.1f MB", bulk_type, size_mb)
-            return entry["download_uri"]
+            logger.info(
+                "Found '%s': %.1f MB, updated at %s",
+                bulk_type,
+                size_mb,
+                entry["updated_at"],
+            )
+            return {
+                "download_uri": entry["download_uri"],
+                "updated_at": entry["updated_at"],
+            }
 
     available = [e["type"] for e in catalogue["data"]]
     raise ValueError(f"Bulk type '{bulk_type}' not found. Available: {available}")

@@ -6,7 +6,7 @@ Writer validated Bronze card and ruling onjects to Parquet files.
 Dessign decisions:
     - Nested fields (dicts, lists) are serialized to JSON strings.
     - Silver layer is responsible for parsing them.
-    - Each run writes a new timestamped file - we never overwrite.
+    - Each run writes a new timestamped file — we never overwrite.
     - Audit columns (_loaded_at, _source, _file_name) are adde4d here.
 """
 
