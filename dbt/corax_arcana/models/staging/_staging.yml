@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: stg_scryfall__cards
+    description: "Staged cards from Scryfall Bronze layer. One row per card printeing."
+    columns:
+      - name: card_id
+        description: "Unique Scryfall ID for this specific card printing"
+        tests:
+          - not_null
+
+      - name: oracle_id
+        description: "ID that groups all printings of the same card."
+        tests:
+          - not_null
+
+      - name: card_name
+        description: "The name of the card."
+        tests:
+          - not_null
+
+      - name: rarity
+        description: "Card rarity."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                ["common", "uncommon", "rare", "mythic", "special", "bonus"]
+
+      - name: set_code
+        description: "Short code identifying the set this card belongs to."
+        tests:
+          - not_null
+
+  - name: stg_scryfall__rulings
+    description: "Staged rulings from Scryfall Bronze layer. One row per ruling per card."
+    columns:
+      - name: oracle_id
+        description: "Links this ruling to a card. Foreign key to stg_scryfall__cards."
+        tests:
+          - not_null
+
+      - name: ruling_text
+        description: "The official ruling text from Wizards of the Coast."
+        tests:
+          - not_null
+
+      - name: published_at
+        description: "Date the ruling was published."
+        tests:
+          - not_null
