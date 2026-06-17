@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: dim_card
+    description: "One row per unique card printing. Deduplicated from Bronze via staging."
+    columns:
+      - name: card_id
+        description: "Unique Scryfall ID for this card printing."
+        tests:
+          - not_null
+          - unique
+
+      - name: oracle_id
+        description: "Groups all printings of the same card."
+        tests:
+          - not_null
+
+      - name: card_name
+        description: "The name of the card."
+        tests:
+          - not_null
+
+      - name: rarity
+        description: "Card rarity."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                ["common", "uncommon", "rare", "mythic", "special", "bonus"]
+
+  - name: dim_ruling
+    description: "One row per unique ruling per card. Deduplicated from Bronze via staging."
+    columns:
+      - name: oracle_id
+        description: "Links this ruling to a card."
+        tests:
+          - not_null
+
+      - name: ruling_text
+        description: "The official ruling text."
+        tests:
+          - not_null
+
+      - name: published_at
+        description: "Date the ruling was published."
+        tests:
+          - not_null
