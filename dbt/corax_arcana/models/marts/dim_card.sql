@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 WITH source AS (
-    SELECT * FROM {{'stg_scryfall__cards'}}
+    SELECT * FROM {{ref('stg_scryfall__cards')}}
 ),
 
 deduped AS (
