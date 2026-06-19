@@ -1,0 +1,110 @@
+version: 2
+
+models:
+  - name: fct_card_prices
+    config:
+      tags: ["gold"]
+    description: >
+      Price snapshots per card per day, extracted from the raw JSON in Bronze.
+      Each row is one card on one day. As the pipeline runs daily,
+      this table builds a full price history over time.
+    columns:
+      - name: card_id
+        description: "Unique identifier for this card printing (from Scryfall)."
+        tests:
+          - not_null
+      - name: card_name
+        description: "Name of the card."
+        tests:
+          - not_null
+      - name: price_date
+        description: "The date this price snapshot was loaded from Scryfall."
+        tests:
+          - not_null
+      - name: price_usd
+        description: "Price in USD, non-foil. NULL if Scryfall has no price."
+      - name: price_usd_foil
+        description: "Price in USD, foil printing. NULL if not available."
+      - name: price_eur
+        description: "Price in EUR, non-foil. NULL if not available."
+      - name: price_tix
+        description: "Price in MTGO tickets. NULL if not available."
+
+  - name: agg_collection_value
+    config:
+      tags: ["gold"]
+    description: >
+      Card values summarised by set and rarity.
+      Answers: what is each set worth at each rarity level?
+      Used by the Financial Intelligence module.
+    columns:
+      - name: set_code
+        description: "Scryfall set code (e.g. 'usg' for Urza's Saga)."
+        tests:
+          - not_null
+      - name: rarity
+        description: "Card rarity within this set."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                ["common", "uncommon", "rare", "mythic", "special", "bonus"]
+      - name: card_count
+        description: "Number of unique cards in this set and rarity."
+        tests:
+          - not_null
+      - name: total_value_usd
+        description: "Sum of USD prices for all priced cards in this group."
+      - name: avg_price_usd
+        description: "Average USD price across all priced cards in this group."
+
+  - name: agg_price_history_weekly
+    config:
+      tags: ["gold"]
+    description: >
+      Weekly price averages per card, grouped from daily snapshots in fct_card_prices.
+      Builds up over time as the pipeline runs daily.
+    columns:
+      - name: card_id
+        description: "Unique identifier for this card printing (from Scryfall)."
+        tests:
+          - not_null
+      - name: week_start
+        description: "The Monday of the week this row covers."
+        tests:
+          - not_null
+      - name: avg_price_usd
+        description: "Average USD price across all daily snapshots in this week."
+      - name: days_of_data
+        description: "How many distinct days of price data exist for this card this week."
+        tests:
+          - not_null
+
+  - name: agg_format_meta
+    config:
+      tags: ["gold"]
+    description: >
+      Card counts and price stats per MTG format.
+      Legalities are extracted from the raw JSON stored in Bronze.
+      Covers Standard, Pioneer, Modern, Legacy, Vintage, Commander, and Pauper.
+    columns:
+      - name: format_name
+        description: "MTG format name."
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values:
+                [
+                  "standard",
+                  "pioneer",
+                  "modern",
+                  "legacy",
+                  "vintage",
+                  "commander",
+                  "pauper",
+                ]
+      - name: legal_card_count
+        description: "Total cards legal in this format."
+        tests:
+          - not_null
