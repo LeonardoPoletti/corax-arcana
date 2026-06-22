@@ -30,6 +30,7 @@ with DAG(
         task_id="ingest_scryfall_cards",  # name of this task
         bash_command=(
             "cd /opt/airflow && "  # go to the project root inside the container
+            "PYTHONPATH=/opt/airflow/src "
             "BRONZE_PATH=data/bronze "  # tell the script where Bronze lives
             # tell the script where DuckDB lives
             "DUCKDB_PATH=data/corax_arcana.duckdb "

@@ -3,7 +3,7 @@
 WITH source AS (
     SELECT *
     FROM read_parquet(
-        '/home/leonardo/projects/corax-arcana/data/bronze/source=scryfall/entity=rulings/*.parquet'
+        '{{ env_var("DBT_BRONZE_PATH", "/home/leonardo/projects/corax-arcana/data/bronze") }}/source=scryfall/entity=rulings/*.parquet'
     )
 ),
 

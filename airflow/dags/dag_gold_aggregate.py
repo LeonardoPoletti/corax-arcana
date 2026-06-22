@@ -39,6 +39,7 @@ with DAG(
         task_id="run_gold_dbt_models",
         bash_command=(
             "cd /opt/airflow/dbt/corax_arcana && "
+            "DBT_BRONZE_PATH=/opt/airflow/data/bronze "
             "dbt run --select tag:gold --profiles-dir /opt/airflow/dbt/corax_arcana"
         ),
     )
@@ -47,6 +48,7 @@ with DAG(
         task_id="quality_gate_gold",
         bash_command=(
             "cd /opt/airflow/dbt/corax_arcana && "
+            "DBT_BRONZE_PATH=/opt/airflow/data/bronze "
             "dbt test --select tag:gold "
             "--profiles-dir /opt/airflow/dbt/corax_arcana"
         ),

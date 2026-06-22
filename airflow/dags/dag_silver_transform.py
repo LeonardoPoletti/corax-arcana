@@ -39,6 +39,7 @@ with DAG(
         task_id="run_silver_dbt_models",
         bash_command=(
             "cd /opt/airflow/dbt/corax_arcana && "  # go into the dbt project folder
+            "DBT_BRONZE_PATH=/opt/airflow/data/bronze "  # tell dbt where Bronze lives
             # run only models tagged 'silver'
             # tell dbt where profiles.yml lives
             "dbt run --select tag:silver --profiles-dir /opt/airflow/dbt/corax_arcana"
@@ -49,6 +50,7 @@ with DAG(
         task_id="quality_gate_silver",
         bash_command=(
             "cd /opt/airflow/dbt/corax_arcana && "
+            "DBT_BRONZE_PATH=/opt/airflow/data/bronze "
             "dbt test --select tag:silver "
             "--profiles-dir /opt/airflow/dbt/corax_arcana"
         ),

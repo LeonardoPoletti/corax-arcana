@@ -22,7 +22,7 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: corax_postgres
+    container_name: corax_arcana_postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: airflow
@@ -39,7 +39,7 @@ services:
 
   airflow-init:
     <<: *airflow-common
-    container_name: corax_airflow_init
+    container_name: corax_arcana_airflow_init
     command:
       - bash
       - -c
@@ -49,9 +49,9 @@ services:
         --username admin
         --password admin
         --firstname Admin
-        --lastname Corax
+        --lastname KyberCorax
         --role Admin
-        --email admin@corax.local
+        --email admin@corax_arcana.local
     restart: "no"
     depends_on:
       postgres:
@@ -59,7 +59,7 @@ services:
 
   airflow-webserver:
     <<: *airflow-common
-    container_name: corax_airflow_webserver
+    container_name: corax_arcana_airflow_webserver
     command: webserver
     ports:
       - "8080:8080"
@@ -76,7 +76,7 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
-    container_name: corax_airflow_scheduler
+    container_name: corax_arcana_airflow_scheduler
     command: scheduler
     restart: unless-stopped
     depends_on:

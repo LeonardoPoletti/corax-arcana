@@ -18,7 +18,7 @@ data/
 # dbt
 dbt/target/
 dbt/logs/
-dbt/.user.yml
+**/.user.yml
 dbt/corax_arcana/profiles.yml
 
 # Jupyter
