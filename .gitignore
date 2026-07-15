@@ -1,0 +1,21 @@
+# Python virtual environment — fully reproducible from pyproject.toml +
+# uv.lock, never committed. Recreate locally with: uv sync
+.venv/
+
+# Python bytecode cache — regenerated automatically on every run.
+__pycache__/
+*.pyc
+
+# pytest's internal cache directory — safe to regenerate, not source.
+.pytest_cache/
+
+# Environment variables / secrets — never committed, provided per
+# environment (dev/staging/prod) outside of version control.
+.env
+.env.*
+
+# Claude Code — personal, machine-specific permission overrides.
+# Shared project settings would live in .claude/settings.json instead
+# (not present yet); this file is local-only by Claude Code's own
+# naming convention and shouldn't be shared via version control.
+.claude/settings.local.json
