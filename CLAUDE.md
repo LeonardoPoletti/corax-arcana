@@ -4,8 +4,19 @@ Freemium SaaS for Magic: The Gathering players — collection management, deck b
 
 ## Current Status
 
-**Phase:** Not yet started — planning complete, implementation not begun.
-**Next milestone:** Phase 1 (Product Foundation) — Group A, task 01 (project and repository setup).
+**Phase:** Phase 1 (Product Foundation) — in progress.
+**Next milestone:** Phase 1, Group A, task 01 (project and repository setup) — in progress.
+
+**Done:**
+- Backend scaffolded with `uv` (FastAPI + pytest + httpx2); `pyproject.toml` and `uv.lock` committed.
+- `/health` endpoint implemented, covered by a passing test.
+- Git initialized locally with atomic Conventional Commits (chore/feat/test/docs).
+- Public GitHub repo created and pushed: https://github.com/LeonardoPoletti/corax-arcana
+
+**Remaining for task 01:**
+- Configure Docker Compose (backend, database, redis)
+- Set up CI with GitHub Actions (lint + tests)
+- Environment variables per environment (dev/staging/prod)
 
 Update this section as work progresses: mark current phase/group/task, note what's done vs. in progress.
 
