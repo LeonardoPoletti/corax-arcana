@@ -2,11 +2,12 @@
 # pytest auto-discovers this file because its name starts with "test_".
 
 from fastapi.testclient import TestClient
+
 # TestClient lets us call our FastAPI routes in memory, without starting
 # a real server or opening a network port. It's built on top of httpx,
 # which is why we installed httpx as a dev dependency.
-
 from app.main import app
+
 # Import the actual FastAPI app instance built in main.py — the one
 # that already has the /health route registered on it.
 
