@@ -13,9 +13,9 @@ Freemium SaaS for Magic: The Gathering players — collection management, deck b
 - Git initialized locally with atomic Conventional Commits (chore/feat/test/docs).
 - Public GitHub repo created and pushed: https://github.com/LeonardoPoletti/corax-arcana
 - Local Docker Compose stack (backend + PostgreSQL 16 + Redis 7) builds and runs; `/health` verified reachable at `localhost:8000` through the container.
+- Set up CI with GitHub Actions (lint + tests)
 
 **Remaining for task 01:**
-- Set up CI with GitHub Actions (lint + tests)
 - Environment variables per environment (dev/staging/prod)
 
 Update this section as work progresses: mark current phase/group/task, note what's done vs. in progress.
