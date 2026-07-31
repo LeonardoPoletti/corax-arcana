@@ -28,4 +28,7 @@ jobs:
         run: uv run ruff check .
 
       - name: Run tests
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci_test
+          REDIS_URL: redis://localhost:6379
         run: uv run pytest
