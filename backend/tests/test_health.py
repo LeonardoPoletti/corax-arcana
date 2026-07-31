@@ -3,11 +3,13 @@
 
 from fastapi.testclient import TestClient
 
+from app.config import get_settings
+
 # TestClient lets us call our FastAPI routes in memory, without starting
 # a real server or opening a network port. It's built on top of httpx,
 # which is why we installed httpx as a dev dependency.
 from app.main import app
-from app.config import get_settings
+
 # Import the same get_settings() the app itself uses, so our assertions
 # below compare against the real configured value instead of a
 # hardcoded guess like "dev" — tests stay correct even if .env changes

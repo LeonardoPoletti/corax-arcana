@@ -2,7 +2,9 @@
 # This is the file Docker/Uvicorn will point at to actually run the API.
 
 from fastapi import FastAPI
+
 from app.config import get_settings
+
 # Import the get_settings() function we built and tested earlier.
 # It reads DATABASE_URL, REDIS_URL, and ENVIRONMENT from the .env file
 # (via pydantic-settings) and returns a validated Settings object.
