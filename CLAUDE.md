@@ -5,7 +5,7 @@ Freemium SaaS for Magic: The Gathering players — collection management, deck b
 ## Current Status
 
 **Phase:** Phase 1 (Product Foundation) — in progress.
-**Next milestone:** Phase 1, Group A, task 01 (project and repository setup) — in progress.
+**Next milestone:** Phase 1, Group A, task 02 (database and initial data model) — not started.
 
 **Done:**
 - Backend scaffolded with `uv` (FastAPI + pytest + httpx2); `pyproject.toml` and `uv.lock` committed.
@@ -14,9 +14,9 @@ Freemium SaaS for Magic: The Gathering players — collection management, deck b
 - Public GitHub repo created and pushed: https://github.com/LeonardoPoletti/corax-arcana
 - Local Docker Compose stack (backend + PostgreSQL 16 + Redis 7) builds and runs; `/health` verified reachable at `localhost:8000` through the container.
 - Set up CI with GitHub Actions (lint + tests)
+- Environment variables per environment: `config.py` (pydantic-settings) loads `.env` regardless of working directory; `/health` returns the real `environment` value; `docker-compose.yml` reads DB/Redis credentials from env vars instead of hardcoding them; CI sets its own `DATABASE_URL`/`REDIS_URL` for the test step.
 
-**Remaining for task 01:**
-- Environment variables per environment (dev/staging/prod)
+**Task 01 complete.**
 
 Update this section as work progresses: mark current phase/group/task, note what's done vs. in progress.
 
