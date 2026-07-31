@@ -7,6 +7,11 @@ from fastapi.testclient import TestClient
 # a real server or opening a network port. It's built on top of httpx,
 # which is why we installed httpx as a dev dependency.
 from app.main import app
+from app.config import get_settings
+# Import the same get_settings() the app itself uses, so our assertions
+# below compare against the real configured value instead of a
+# hardcoded guess like "dev" — tests stay correct even if .env changes
+# later (e.g. once staging/prod values exist).
 
 # Import the actual FastAPI app instance built in main.py — the one
 # that already has the /health route registered on it.
@@ -30,7 +35,17 @@ def test_health_check():
     # raised an exception internally, this would catch it by failing
     # with a different status code (likely 500).
 
-    assert response.json() == {"status": "ok"}
-    # Confirm the response body matches exactly what health_check()
-    # returns in main.py. If someone changes that return value without
-    # updating this test, this assertion is what catches the mismatch.
+    assert response.json() == {"status": "ok", "environment": get_settings().environment}
+    # Updated from the original {"status": "ok"} exact-match: now that
+    # health_check() also returns "environment", the old assertion would
+    # fail even though nothing is broken — the response shape legitimately
+    # changed, so the test's expectation had to change with it.
+
+def test_health_check_includes_environment():
+    # Proves main.py actally uses Settings, not just that config.py
+    # works in isolation. We compare against get_settings() directly
+    # rather than hardcoding "dev", so the test stays correct  even if
+    # .env changes later.
+    response = client.get("/health")
+
+    assert response.json()["environment"] == get_settings().environment
