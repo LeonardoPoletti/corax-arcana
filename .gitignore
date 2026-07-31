@@ -13,6 +13,7 @@ __pycache__/
 # environment (dev/staging/prod) outside of version control.
 .env
 .env.*
+!.env.example
 
 # Claude Code — personal, machine-specific permission overrides.
 # Shared project settings would live in .claude/settings.json instead
